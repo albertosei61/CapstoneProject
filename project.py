@@ -6,8 +6,11 @@ import os
 import csv, glob
 from fpdf import FPDF
 from reportlab.pdfgen.canvas import Canvas
-root = tk.Tk()
+from datetime import datetime
+import re
 
+
+root = tk.Tk()
 
 canvas = tk.Canvas(root, width=600, height=300)
 canvas.grid(columnspan=3)
@@ -25,63 +28,32 @@ logo_label.image = logo
 logo_label.grid(column=1, row=0)
 
 #User prompt on main page
-guide = tk.Label(root, text="Click to get in your dream car TODAY", font="Raleway")
+guide = tk.Label(root, text="", font="Raleway")
 guide.grid(columnspan=3, column=0, row=1)
 
 
 #User input and then append match to print()  
 #Function to get user input. Also another button will be created to exit function
 #Parameters are Car Brand, or model, year, mileage, type(sedan etc.)
-
-
 def inputYear(year):
-        global yearCsv
-        csv_folder_path = "../Capstone Project/us-car-models-data"
-        csv_files = [f for f in os.listdir(csv_folder_path)]
-        for filename in csv_files:
-            if year in filename:
-                yearCsv = "us-car-models-data/" + filename
-                print(yearCsv)
-
-    
-def userInput():
-    global year, make, model, body_styles
-    print("Enter car year: ")
-    year = input()
-    inputYear(year)
-    print("Enter car make: ")
-    make = input()
-    print("Enter car model: ")
-    model= input()
-    print("Enter body style preference")
-    input1 = input()
-    body_styles = f'["{input1}"]'
-    #phone = input("Enter phone number")
-
-    #with open('us-car-models-data/2020.csv', 'r') as file:
-        #csvFile = csv.reader(file)
-        #for line in csvFile:
-            #print(line)
-            #contactInfo()
-    ContactInfo()
+    global yearCsv
+    csv_folder_path = "../Capstone Project/us-car-models-data"
+    csv_files = [f for f in os.listdir(csv_folder_path)]
+    for filename in csv_files:
+        #Passed a string to year due to conditions set for input function
+        if year in filename:
+            yearCsv = "us-car-models-data/" + filename
+            #print(yearCsv)
 
 
 
-
-
-        
-
-#def contactInfo():
-    #name = input("Enter your name")
-    #phone = input("Enter your phone number:")
-
-    #phone_number()
 def csvSet():
     try:
         # initializing the titles and rows list
         fields = []
         rows = [year, make, model, body_styles]
-
+        
+        inputYear(year)
         # reading csv file
         filename = yearCsv
         with open(filename, 'r') as csvfile:
@@ -102,25 +74,43 @@ def csvSet():
 
                     print(formatted_string)
 
-                    pdf_filename = "file.pdf"
-                    pdf = Canvas(pdf_filename)
+                    #New PDF page
 
-                    # Set up the canvas and positioning for text
+                    pdf = Canvas("car_interest.pdf")         
+
+                    pdf.setTitle("Dealership Car Interest Paper")       
+
+                    pdf.setFont("Helvetica-Bold", 16)
+
+                    pdf.drawCentredString(300, 750, "Dealership Car Interest Paper")
+
                     pdf.setFont("Helvetica", 12)
-                    x = 100
-                    y = 700
-                    greeting = "Hello thank you for taking the time to search our inventory!. We will contact you within 24 hours after request if it falls on a business day.\
-                            Thank you"
-                    pdf.drawString(20, 800, greeting)
-        
 
-                    # Write the formatted string to the PDF
-                    pdf.drawString(x, y, formatted_string)
+                    now = datetime.now()
+                    date_time = now.strftime("%m/%d/%Y %H:%M:%S")
 
-                    # Save the PDF
+                    pdf.drawString(50, 700, f"Date and Time: {date_time}")
+
+                    pdf.drawString(50, 650, f"Name: {customer_name}")
+
+                    pdf.drawString(50, 600, f"Email: {customer_email}")
+
+                    pdf.drawString(50, 550, f"Phone Number: {customer_phone}")
+
+                    pdf.drawString(50, 500, f"Address: {customer_address}")
+
+                    pdf.drawString(50, 450, f"Car Make and Model of Interest: {csv_make} {csv_model}")
+
+                    pdf.drawString(50, 400, f"Color of Car of Interest: {color_preference}")
+
+                    pdf.drawString(50, 350, f"Features of Car of Interest: {car_features}")
+
+                    pdf.setFont("Helvetica", 8)
+                    # write a dealer special message.
+                    pdf.drawString(50, 300, "Disclaimer: This document does not guarantee the availability or price of the car of interest.")
+
                     pdf.save()
-
-                    printPDF()
+                    #print("See pdf page for more information")
     
     except FileNotFoundError:
         print("File not found!")
@@ -128,6 +118,105 @@ def csvSet():
         print("Invalid CSV format: Index out of range!")
     except Exception as e:
         print("An error occurred:", str(e))
+    
+
+
+
+
+def ContactInfo():
+    global customer_name, customer_email, customer_address, customer_phone
+    print("Enter name: ")
+    customer_name = input()
+    
+
+  
+    while True:
+        customer_phone = input("Please enter your phone number: ")
+        customer_email = input("Please enter your email address: ")
+        
+        # Validate phone number format
+        if not re.match(r'^\d{3}-\d{3}-\d{4}$', customer_phone):
+            print("Invalid phone number format. Please enter in the format XXX-XXX-XXXX.")
+            continue
+        
+        # Validate email address format
+        if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', customer_email):
+            print("Invalid email address format. Please enter a valid email address.")
+            continue
+        
+        # If both formats are valid, break out of the loop
+        break
+
+
+
+
+
+    print("What is your home address?")
+    customer_address = input()
+    print("Thank you for entering your information, it seems there was a match!. We'll be in contact with you.")
+    file = open('contacts.txt', 'a')
+
+    file.write(customer_name)
+    file.write(" , ")
+    file.write(customer_phone)
+    file.write("\n")
+    file.write(customer_email)
+    file.write(",")
+    file.write(customer_address)
+    file.write("\n")
+
+    file.close()
+
+
+
+def userInput():
+    global year, make, model, body_styles, color_preference, car_features
+    
+        #current_year = datetime.now().year +1
+    # current_year = 2024
+    # year = input("Enter Year Here! Type quit to stop >>")
+    # if year == "":
+    #     year = current_year
+        #else:
+        #    year = int(year)
+
+    #year = int(year) if year else current_year
+    # while True:
+    #     if not 1992 < year < current_year:
+    #         print("Please specify a date between 1992 to {}".format(current_year))
+        
+    #     else:
+    #         print('We have inventory for that year')
+
+    print("Enter car year: ")
+    year = input()
+
+
+    print("Enter car make: ")
+    make = input()
+    print("Enter car model: ")
+    model= input()
+    print("Enter body style preference")
+    input1 = input()
+    body_styles = f'["{input1}"]'
+    print("Enter color preference: ")
+    color_preference = input()
+
+    print("Enter car features: ")
+    car_features = input()
+
+userInput()
+
+
+
+
+ContactInfo()
+csvSet()
+
+
+
+        
+
                     
 
 def printPDF():
@@ -140,74 +229,11 @@ def printPDF():
     #pdf.output("file.pdf")
 
     print("Here") 
-    
-       
-                    
-                
-                    
-#except Exception as e:
-     #print("An error occured: {}".format(e))
-
-
-                    
- 
-        # get total number of rows
-        #print("Total no. of rows: %d"%(csvreader.line_num))
- 
-    # printing the field names
-   # print('Field names are:' + ', '.join(field for field in fields))
- 
-    # printing first 5 rows
-   # print('\nFirst 5 rows  are:\n')
-   # for row in rows[:5]:
-        # parsing each column of a row
-       # for col in row:
-            #print("%10s"%col,end=" "),
-        #print('\n')
-    
-
-
-        #results()
-
-    
-    
-
-
-
-
-#def results():
-     
-
-
-
-def ContactInfo():
-    print("Enter name: ")
-    firstInput = input()
-
-    print("What is your phone number: ")
-    secInput = input()
-
-    file = open('contacts.txt', 'a')
-
-    file.write(firstInput)
-    file.write(" , ")
-    file.write(secInput)
-    file.write("\n")
-
-    file.close()
-
-
-    csvSet()
-
-
-    
 
 
 
 
 
-    
-  
 
 
 
