@@ -41,7 +41,7 @@ def inputYear(year):
     csv_files = [f for f in os.listdir(csv_folder_path)]
     for filename in csv_files:
         #Passed a string to year due to conditions set for input function
-        if year in filename:
+        if str(year) in filename:
             yearCsv = "us-car-models-data/" + filename
             #print(yearCsv)
 
@@ -50,7 +50,7 @@ def inputYear(year):
 def csvSet():
     try:
         # initializing the titles and rows list
-        fields = []
+        #fields = []
         rows = [year, make, model, body_styles]
         
         inputYear(year)
@@ -121,8 +121,8 @@ def csvSet():
         print("File not found!")
     except IndexError:
         print("Invalid CSV format: Index out of range!")
-    except Exception as e:
-        print("An error occurred:", str(e))
+    #except Exception as e:
+        #print("An error occurred:", str(e))
     
 
 
@@ -158,7 +158,7 @@ def ContactInfo():
 
     print("What is your home address?")
     customer_address = input()
-    #print("Thank you for entering your information, it seems there was a match!. We'll be in contact with you.")
+    print("Thank you for entering your information, it seems there was a match!. We'll be in contact with you.")
     file = open('contacts.txt', 'a')
 
     file.write(customer_name)
@@ -175,40 +175,43 @@ def ContactInfo():
 
 
 def userInput():
-    global year, make, model, body_styles, color_preference, car_features
+    global year,  make, model, body_styles, color_preference, car_features
     
-        #current_year = datetime.now().year +1
-    # current_year = 2024
-    # year = input("Enter Year Here! Type quit to stop >>")
-    # if year == "":
-    #     year = current_year
-        #else:
-        #    year = int(year)
+    current_year = datetime.now().year 
+    current_year = 2024
+    year = input("Enter Year: ")
+    if year == "":
+        year = current_year
+    else:
+        year = int(year)
 
-    #year = int(year) if year else current_year
-    # while True:
-    #     if not 1992 < year < current_year:
-    #         print("Please specify a date between 1992 to {}".format(current_year))
+        #year = int(year) if year else current_year
+    while True:
+        if not 1992 < year < current_year:
+            print("Please specify a date between 1992 to {}".format(current_year))
+            year = input("Enter Year: ")
         
-    #     else:
-    #         print('We have inventory for that year')
+        else:
+            print('We have inventory for that year')
+            
 
-    print("Enter car year: ")
-    year = input()
+    #print("Enter car year: ")
+    #year = input()
 
 
-    print("Enter car make: ")
-    make = input()
-    print("Enter car model: ")
-    model= input()
-    print("Enter body style preference")
-    input1 = input()
-    body_styles = input1
-    print("Enter color preference: ")
-    color_preference = input()
+        print("Enter car make: ")
+        make = input()
+        print("Enter car model: ")
+        model= input()
+        print("Enter body style preference")
+        input1 = input()
+        body_styles = input1
+        print("Enter color preference: ")
+        color_preference = input()
 
-    print("Enter car features: ")
-    car_features = input()
+        print("Enter car features: ")
+        car_features = input()
+        break
 
 userInput()
 
