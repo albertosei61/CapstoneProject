@@ -65,15 +65,19 @@ def csvSet():
 
             # extracting each data row one by one
             for row in csvreader:
-                if make.lower() == row[1].lower() and model.lower() == row[2].lower() and body_styles.lower() == row[3].lower():
+                if make.lower() in row[1].lower() and model.lower() in row[2].lower() and body_styles.lower() in row[3].lower():
+            
+        
+            
+
                     csv_make = row[1]
                     csv_model = row[2]
                     csv_body_styles = row[3]  
 
                     formatted_string = "Year: {}\nMake: {}\nModel: {}\nBody styles: {}".format(year, csv_make, csv_model, csv_body_styles[2:-2])
-
                     print(formatted_string)
-
+         
+            
                     #New PDF page
 
                     pdf = Canvas("car_interest.pdf")         
@@ -111,6 +115,7 @@ def csvSet():
 
                     pdf.save()
                     #print("See pdf page for more information")
+            
     
     except FileNotFoundError:
         print("File not found!")
@@ -153,7 +158,7 @@ def ContactInfo():
 
     print("What is your home address?")
     customer_address = input()
-    print("Thank you for entering your information, it seems there was a match!. We'll be in contact with you.")
+    #print("Thank you for entering your information, it seems there was a match!. We'll be in contact with you.")
     file = open('contacts.txt', 'a')
 
     file.write(customer_name)
@@ -198,7 +203,7 @@ def userInput():
     model= input()
     print("Enter body style preference")
     input1 = input()
-    body_styles = f'["{input1}"]'
+    body_styles = input1
     print("Enter color preference: ")
     color_preference = input()
 

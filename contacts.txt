@@ -1,12 +1,46 @@
-Dennis Osei , 343-343-2344
-kingkofi1895@gmail.com,126 brown st
-Albert , 123-333-2323
-asdfd@gmail.com,126 brown
-Albert Osei , 123-322-2311
-albeo@gmail.com,123 home street
-Albert Osei , 123-312-2121
-albeo@gmail.com,123 home street
-Albert , 232-232-3223
-albe@gmail.com,12 fdfd
-dfdf , 232-232-3232
-fsf@gmail.com,122 fsgdg
+John Doe , 123-456-7890
+johndoe@example.com,123 Main St
+Yvonne Udam , 609-227-3337
+udam@gmail.com,126 brown
+sfs , 123-323-2322
+asf@gmail.com,dfgdg
+sfsf , 122-232-2121
+assf@gmail.com,sfsf
+Bryan , 122-213-2112
+albe@gmail.com,123 bowe
+df , 856-212-1211
+asfdf@gmail.com,sfsd
+fsfsf , 122-343-3232
+sfsfW@gmail.com,sfsf
+sf , 212-212-1211
+sfs@gmail.com,sfs
+sfsf , 122-212-2111
+sffs@gmail.com,sfs
+sf , 122-212-2121
+ssf@gmail.com,sfsf
+adhh , 533-566-5644
+ghd@gmail.com,hjkh
+jj , 323-232-2323
+sfsf@gmail.com,sfsf
+dfd , 222-232-2323
+sfs@gmail.com,fsfs
+dg , 212-222-2112
+albert@gmail.com,fsfs
+sf , 323-232-2323
+fsfsf@gmail.com,sfsf
+sfsf , 232-232-3232
+sfffs@gmail.com,sfs
+sf , 322-233-3232
+fsfs@gmail.com,sffs
+sfs , 323-323-2322
+sffs@gmail.com,fsf
+sf , 232-232-2322
+sfs@gmail.com,sfsf
+fs , 222-232-2323
+sff@gmail.com,fsfs
+ , 222-232-2323
+sfs@gmail.com,sfs
+dfdf , 222-222-1211
+sffs@gmail.com,fsf
+sfsf , 332-323-2323
+sff@gmail.com,fsfs
